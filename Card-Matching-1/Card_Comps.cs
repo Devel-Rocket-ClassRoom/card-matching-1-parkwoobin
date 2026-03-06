@@ -1,7 +1,10 @@
 using System;
 
+
+
 public class Card  // 카드 구성 클래스
 {
+    public ISkin skin;
     public int diffLevel = 2;  // 현재 난이도 (1: 쉬움, 2: 보통, 3: 어려움)
 
     // 쉬움 난이도 기준 카드 배열 (2x4)
@@ -219,11 +222,19 @@ public class CardDisplay
                 }
                 else if (card.cardState[i, j] == 1)    // 1면 드러난 것
                 {
-                    Console.Write($"[{card.card[i, j],1}]  ");  // 드러난 카드
+                    string val = card.skin != null ? card.skin.GetCardValue(card.card[i, j]) : card.card[i, j].ToString();
+                    if (card.skin != null)
+                        Console.ForegroundColor = card.skin.GetColor(card.card[i, j]);
+                    Console.Write($"[{val,1}]  ");  // 드러난 카드
+                    Console.ResetColor();
                 }
                 else if (card.cardState[i, j] == 2)    // 2면 맞춘 것
                 {
-                    Console.Write($"{card.card[i, j],2}   ");  // 드러난 카드
+                    string val = card.skin != null ? card.skin.GetCardValue(card.card[i, j]) : card.card[i, j].ToString();
+                    if (card.skin != null)
+                        Console.ForegroundColor = card.skin.GetColor(card.card[i, j]);
+                    Console.Write($"{val,2}   ");  // 드러난 카드
+                    Console.ResetColor();
                 }
             }
             Console.WriteLine();

@@ -1,5 +1,5 @@
 using System;
-using System.Threading;
+Console.InputEncoding = System.Text.Encoding.UTF8;
 
 int GameFlag = 0;   // 게임 종료 플래그 (0: 진행 중, 1: 종료)
 int count = 0;  // 시도 횟수 카운트 변수
@@ -25,6 +25,33 @@ Sleep sleep = new Sleep();
 while (true)
 {
     Console.Clear();
+
+    Console.WriteLine("카드 스킨을 선택하세요: ");
+    Console.WriteLine("1. 알파벳 스킨");
+    Console.WriteLine("2. 기호 스킨");
+    Console.WriteLine("3. 숫자 스킨");
+
+    int skinChoice = int.Parse(Console.ReadLine());
+    ISkin selectedSkin;
+    switch (skinChoice)
+    {
+        case 1:
+            selectedSkin = new AlphabetSkin();
+            break;
+        case 2:
+            selectedSkin = new SymbolSkin();
+            break;
+        case 3:
+            selectedSkin = new NumberSkin();
+            break;
+        default:
+            Console.WriteLine("잘못된 선택입니다. 기본 스킨을 사용합니다.");
+            selectedSkin = new NumberSkin();
+            break;
+    }
+    selectedSkin.DisplaySkin();
+    card.skin = selectedSkin;
+
     difficulty.SetDifficulty();
     card.diffLevel = difficulty.input;  // 선택한 난이도를 카드에 설정
 
