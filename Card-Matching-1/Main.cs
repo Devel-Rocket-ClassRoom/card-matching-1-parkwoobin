@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 Console.InputEncoding = System.Text.Encoding.UTF8;
 
 int GameFlag = 0;   // 게임 종료 플래그 (0: 진행 중, 1: 종료)
@@ -58,10 +59,12 @@ while (true)
 
     Console.Clear();
     cardRandom.Shuffle(card);
-    // 카드 숨기기
 
-    cardStatus.Hide(card);
-    // 숨긴상태 **로 출력
+    // 미리보기 시간 설정
+    sleep.SetPreviewTime(card);
+
+    // 미리보기: 모든 카드를 보여준 뒤 뒤집기
+    sleep.PreviewCards(card, cardDisplay, cardStatus);
     while (GameFlag == 0)
     {
         int x1, y1;  // 예시로 첫 번째 카드 선택 좌표
@@ -88,7 +91,7 @@ while (true)
         cardDisplay.CountTry(count, matchCount, card, difficulty);
 
         cardCheck.match(card, x1, y1, x2, y2, ref matchCount);  // 카드 일치 검사 및 결과 처리
-        sleep.SleepTime(card);  // 난이도에 따라 카드 확인 시간 조절      
+        Thread.Sleep(1000);  // 카드 확인 후 잠시 대기
 
         over.GameOver(ref ClearFlag, count, matchCount, card, difficulty, cardDisplay, ref GameFlag);  // 게임 오버 검사 및 처리
 
@@ -110,7 +113,7 @@ while (true)
                 count = 0;
                 GameFlag = 0;   // 게임 진행 상태로 초기화
                 cardRandom.Shuffle(card);
-                cardStatus.Hide(card);
+                sleep.PreviewCards(card, cardDisplay, cardStatus);  // 미리보기 후 카드 뒤집기
                 continue;  // while 조건 재검사 → GameFlag == 0이므로 루프 탈출
             }
             else if (input.Equals("n"))
