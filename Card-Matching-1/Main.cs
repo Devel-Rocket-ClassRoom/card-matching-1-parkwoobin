@@ -164,7 +164,6 @@ while (true)
                 currentMode.Reset();
                 GameFlag = 0;   // 게임 진행 상태로 초기화
                 cardRandom.Shuffle(card);
-                sleep.PreviewCards(card, cardDisplay, cardStatus);  // 미리보기 후 카드 뒤집기
                 currentMode.Start();
                 continue;  // while 조건 재검사 → GameFlag == 0이므로 루프 탈출
             }
