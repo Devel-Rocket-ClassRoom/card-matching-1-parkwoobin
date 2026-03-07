@@ -4,14 +4,14 @@ using System.Threading;
 
 class Sleep
 {
-    public int previewTime; // 미리보기 시간 (밀리초 단위)
+    private int previewTime; // 미리보기 시간 (밀리초 단위)
 
     // 난이도에 따른 기본 미리보기 시간 설정
     public void SetPreviewTime(Card card)
     {
-        if (card.diffLevel == 1)
+        if (card.DiffLevel == 1)
             previewTime = 5000; // 쉬움: 5초
-        else if (card.diffLevel == 2)
+        else if (card.DiffLevel == 2)
             previewTime = 3000; // 보통: 3초
         else
             previewTime = 2000; // 어려움: 2초
